@@ -1,0 +1,42 @@
+{
+    "name": "Blocker",
+    "author": "Sashank",
+    "version": "0.1.0",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "description": "Hide Difficulty Levels of LeetCode",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://*.com/*",
+        "https://leetcode.com/problems/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "scripts": [
+        "popup.js"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.com/*"
+            ],
+            "js": [
+                "popup.js",
+                "content.js",
+                "background.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "action": {
+        "default_title": "Blocker",
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
