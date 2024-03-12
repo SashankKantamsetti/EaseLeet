@@ -13,7 +13,8 @@
     ],
     "host_permissions": [
         "https://*.com/*",
-        "https://leetcode.com/problems/*"
+        "https://leetcode.com/problems/*",
+        "https://leetcode.com/problemset/*"
     ],
     "background": {
         "service_worker": "background.js"
