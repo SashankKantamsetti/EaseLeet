@@ -5,14 +5,14 @@ chrome.storage.sync.set({ popupButton: popupButtonText, canShow: show }, functio
 })
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     console.log(tab);
-    chrome.tabs.sendMessage(tabId, { message: "yes-main" });
-    if (changeInfo.url && changeInfo.url.includes("https://leetcode.com/problemset/")) {
+    chrome.tabs.sendMessage(tabId, { message: "yes-main", info: tab.url });
+    /*if (changeInfo.url && changeInfo.url.includes("https://leetcode.com/problemset/")) {
         console.log("yes-main")
     }
     if (changeInfo.url && changeInfo.url.includes("https://leetcode.com/problems/")) {
         console.log("yes")
         chrome.tabs.sendMessage(tabId, { message: "yes" });
-    }
+    }*/
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.storage.sync.set({ canShow: message.changeCanShow }, async function () {
             show = message.changeCanShow
             console.log('canShow value updated and stored in background:', show);
-            if (show === false) {
+            /*if (show === false) {
                 chrome.storage.sync.set({ popupButton: "Show Tags" }, () => {
                     console.log("Hide Button Clicked")
                 })
@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 chrome.storage.sync.set({ popupButton: "Hide Tags" }, () => {
                     console.log("Show Button Clicked")
                 })
-            }
+            }*/
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 // Refresh the tab
                 setTimeout(() => { chrome.tabs.reload(tabs[0].id); }, 1000)
