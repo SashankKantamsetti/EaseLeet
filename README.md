@@ -1,8 +1,8 @@
-# LeetCode Extension - README
+# EaseLeet
 
 ## Overview
 
-Welcome to the LeetCode Extension! This extension enhances your LeetCode experience by providing additional features such as:
+Welcome to the EaseLeet Extension! This extension enhances your LeetCode experience by providing additional features such as:
 
 - Removing easy, medium, and hard tags from questions.
 - Adding suggestions from YouTube below each question.
