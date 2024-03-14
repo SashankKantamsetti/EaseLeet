@@ -1,5 +1,6 @@
 var canShow = true;
 var idss = 0;
+var prevurl = ''
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Check if the message is to remove the tags
     if (message.message === "hide") {
@@ -12,7 +13,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.storage.sync.get('canShow', function (data) {
             canShow = data.canShow;
             idss = message.info;
-            removeDifficultyTagsOuter(message.info);
+            if (prevurl !== idss) removeDifficultyTagsOuter(message.info);
+            prevurl = idss
         });
     }
 
@@ -43,7 +45,7 @@ async function removeDifficultyTagsOuter(link) {
         setTimeout(() => {
             var acceptance = document.querySelectorAll(".flex.items-center.mx-2")
             for (var i = 3; i < acceptance.length; i += 6) {
-                acceptance[i].innerHTML = "100%";
+                acceptance[i].innerHTML = "-";
             }
             for (var i = 5; i < acceptance.length; i += 6) {
 
@@ -114,16 +116,17 @@ async function removeDifficultyTagsOuter(link) {
 
         var videoData, embeds;
 
-        fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&order=relevance&q=${newString}&type=video&key=AIzaSyDBVvCAkh5oF-sTGXHZrbhCFKbihwcN718`)
+        fetch(`https://youtube-video-fetching.onrender.com?text=${newString}`)
             .then(res => res.json())
             .then(data => {
                 videoData = data.items;
                 embeds = videoData.map(video => {
-                    var videoId = video.id.videoId
+                    var videoId = video.id
                     return (
                         `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
                     )
                 })
+                console.log(embeds)
 
             }).then(() => {
                 const vidBar = document.querySelectorAll(".mt-6.flex.flex-col.gap-3")[0];
@@ -192,8 +195,7 @@ async function removeDifficultyTagsOuter(link) {
                 // Append the dropdown element to the document body or any desired parent element
                 vidBar.appendChild(dropdownElement);
             })
-
-
+        prevurl = link
 
     }
 }
